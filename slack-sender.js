@@ -45,10 +45,11 @@ function sendToSlack(messages, config) {
         attachments: []
     };
 
+    const prefix_message_with_username = config.prefix_message_with_username ? payload.username : null;
 
     // Merge together all messages from same process and with same event
     // Convert messages to Slack message's attachments
-    payload.attachments = convertMessagesToSlackAttachments(mergeSimilarMessages(limitedCountOfMessages), payload.username);
+    payload.attachments = convertMessagesToSlackAttachments(mergeSimilarMessages(limitedCountOfMessages), prefix_message_with_username);
 
     // Because Slack`s notification text displays the fallback text of first attachment only,
     // add list of message types to better overview about complex message in mobile notifications.
@@ -131,7 +132,7 @@ function convertMessagesToSlackAttachments(messages, username) {
             color = redColor;
         }
 
-        var title = `${config.prefix_message_with_username ? `[${username}] ` : ''}${message.name} ${message.event}`;
+        var title = `${username ? `[${username}] ` : ''}${message.name} ${message.event}`;
         var description = (message.description || '').trim();
         var fallbackText = title + (description ? ': ' + description.replace(/[\r\n]+/g, ', ') : '');
         slackAttachments.push({
