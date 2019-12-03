@@ -79,7 +79,7 @@ const slackUrlRouter = {
             // Init new messageQueue to different Slack URL.
 
             // Resolve configuration parameters.
-            const configProperties = ['username', 'servername', 'buffer', 'slack_url', 'buffer_seconds', 'buffer_max_seconds', 'queue_max'];
+            const configProperties = ['username', 'servername', 'prefix_message_with_username', 'buffer', 'slack_url', 'buffer_seconds', 'buffer_max_seconds', 'queue_max'];
             const config = {};
             configProperties.map((configPropertyName) => {
                 // Use process based custom configuration values if exist, else use the global configuration values.

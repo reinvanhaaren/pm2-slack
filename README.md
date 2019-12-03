@@ -43,6 +43,7 @@ The following options are available:
 
 - `slack_url` (string) - Slack Incomming Webhook URL.
 - `servername` / `username` (string) - Set the custom username for Slack messages (visible in message headers). Default: server hostname
+- `prefix_title_with_servername` - Prefix the message title with the servername. Default: false
 - `buffer` (bool) - Enable/Disable buffering of messages. Messages that occur in short time will be concatenated together and posted as a single slack message. Default: true
 - `buffer_seconds` (int) - If buffering is enables, all messages are stored for this interval. If no new messages comes in this interval, buffered message(s) are sended to Slack. If new message comes in this interval, the "timer" will be reseted and buffer starts waiting for the new interval for a new next message. *Note: Puspose is reduction of push notifications on Slack clients.* Default: 2
 - `buffer_max_seconds` (int) - If time exceed this time, the buffered messages are always sent to Slack, even if new messages are still comming in interval (property `buffer_seconds`). Default: 20

@@ -48,7 +48,7 @@ function sendToSlack(messages, config) {
 
     // Merge together all messages from same process and with same event
     // Convert messages to Slack message's attachments
-    payload.attachments = convertMessagesToSlackAttachments(mergeSimilarMessages(limitedCountOfMessages));
+    payload.attachments = convertMessagesToSlackAttachments(mergeSimilarMessages(limitedCountOfMessages), payload.username);
 
     // Because Slack`s notification text displays the fallback text of first attachment only,
     // add list of message types to better overview about complex message in mobile notifications.
@@ -121,7 +121,7 @@ function mergeSimilarMessages(messages) {
  * @param {Message[]) messages
  * @returns {SlackAttachment[]}
  */
-function convertMessagesToSlackAttachments(messages) {
+function convertMessagesToSlackAttachments(messages, username) {
     return messages.reduce(function(slackAttachments, message) {
 
         // The default color for events should be green
@@ -131,7 +131,7 @@ function convertMessagesToSlackAttachments(messages) {
             color = redColor;
         }
 
-        var title = `${message.name} ${message.event}`;
+        var title = `${config.prefix_message_with_username ? `[${username}] ` : ''}${message.name} ${message.event}`;
         var description = (message.description || '').trim();
         var fallbackText = title + (description ? ': ' + description.replace(/[\r\n]+/g, ', ') : '');
         slackAttachments.push({
