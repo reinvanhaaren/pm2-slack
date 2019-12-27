@@ -133,12 +133,14 @@ pm2.launchBus(function(err, bus) {
             if (data.process.name === 'pm2-slack') { return; } // Ignore messages of own module.
 
             const parsedLog = parseIncommingLog(data.data);
-            slackUrlRouter.addMessage({
-                name: parseProcessName(data.process),
-                event: 'error',
-                description: parsedLog.description,
-                timestamp: parsedLog.timestamp,
-            });
+            if (!parsedLog.description.includes('Attempt to write logs with no transports ')) {
+                slackUrlRouter.addMessage({
+                    name: parseProcessName(data.process),
+                    event: 'error',
+                    description: parsedLog.description,
+                    timestamp: parsedLog.timestamp,
+                });
+            }
         });
     }
 
